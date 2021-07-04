@@ -76,9 +76,7 @@ grails:
         enabled: true
 ---
 grails:
-    mongodb:
-        host: localhost
-        port: 27017
-        #username: ""
-        #password: ""
-        #databaseName: "mydatabase"
+    gorm:
+        multiTenancy:
+            mode: DISCRIMINATOR
+            tenantResolverClass: org.grails.datastore.mapping.multitenancy.web.SessionTenantResolver

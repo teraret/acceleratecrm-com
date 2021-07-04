@@ -1,52 +1,52 @@
-import React, {Component} from 'react';
-import AppNav from './AppNav';
-import {Row} from 'reactstrap'
+import React, { Component } from 'react';
+import AppNav from './../AppNav';
+import { Row } from 'reactstrap'
 
-import grailsLogo from './images/grails-cupsonly-logo-white.svg';
-import reactLogo from './images/logo.svg';
-import {CLIENT_VERSION, REACT_VERSION, SERVER_URL} from './config';
+import grailsLogo from './../images/grails-cupsonly-logo-white.svg';
+import reactLogo from './../images/logo.svg';
+import { CLIENT_VERSION, REACT_VERSION, SERVER_URL } from './../config';
 import 'whatwg-fetch';
-import Footer from "./Footer";
+import Footer from "./../Footer";
 
 class App extends Component {
 
     state = {
-      serverInfo: {},
-      clientInfo: {
-        version: CLIENT_VERSION,
-        react: REACT_VERSION
-      },
-      collapse: false
+        serverInfo: {},
+        clientInfo: {
+            version: CLIENT_VERSION,
+            react: REACT_VERSION
+        },
+        collapse: false
     }
 
     toggle = () => {
-        this.setState({collapse: !!this.state.collapse})
+        this.setState({ collapse: !!this.state.collapse })
     }
 
     componentDidMount() {
         fetch(SERVER_URL + '/application')
             .then(r => r.json())
-            .then(json => this.setState({serverInfo: json}))
+            .then(json => this.setState({ serverInfo: json }))
             .catch(error => console.error('Error connecting to server: ' + error));
 
     }
 
     render() {
-        const {serverInfo, clientInfo, collapse} = this.state;
+        const { serverInfo, clientInfo, collapse } = this.state;
 
         return [
-            <AppNav serverInfo={serverInfo} clientInfo={clientInfo} collapse={collapse} toggle={this.toggle} key={0}/>,
+            <AppNav serverInfo={serverInfo} clientInfo={clientInfo} collapse={collapse} toggle={this.toggle} key={0} />,
             <div className="grails-logo-container" key={1}>
-                <img className="grails-logo" src={grailsLogo} alt="Grails"/>
+                <img className="grails-logo" src={grailsLogo} alt="Grails" />
                 <span className="plus-logo">+</span>
-                <img className="hero-logo" src={reactLogo} alt="React"/>
+                <img className="hero-logo" src={reactLogo} alt="React" />
             </div>,
 
             <Row key={2}>
                 <div id="content">
                     <section className="row colset-2-its">
-                        <h1 style={{textAlign: 'center'}}>Welcome to Grails</h1>
-                        <br/>
+                        <h1 style={{ textAlign: 'center' }}>Welcome to Grails</h1>
+                        <br />
                         <p>
                             Congratulations, you have successfully started your Grails & React application! While in
                             development mode, changes will be loaded automatically when you edit your React app,
@@ -70,7 +70,7 @@ class App extends Component {
                 </div>
 
             </Row>,
-            <Footer key={3}/>
+            <Footer key={3} />
         ];
     }
 }
