@@ -37,20 +37,24 @@ class ReportController {
 
 
 
-    private void createPdfReport(List<Payslip> payslips) throws JRException {
+    private void createPdfReport(List<Payslip> payslips) throws IOException,  JRException {
 
-        final InputStream stream = this.getClass().getResourceAsStream("/report.jrxml");
+        final InputStream stream = this.getClass().getResourceAsStream("/report.jrxml")
 
-        final JasperReport report = JasperCompileManager.compileReport(stream);
+        final JasperReport report = JasperCompileManager.compileReport(stream)
 
 
-        final JRBeanCollectionDataSource source = new JRBeanCollectionDataSource(payslips);
+        final JRBeanCollectionDataSource source = new JRBeanCollectionDataSource(payslips)
 
-        final Map<String, Object> parameters = new HashMap<>();
-        parameters.put("createdBy", "javacodegeek.com");
-        final JasperPrint print = JasperFillManager.fillReport(report, parameters, source);
-        final String filePath = "Harish_Babu";
-        JasperExportManager.exportReportToPdfFile(print, filePath + ".pdf");
+        final Map<String, Object> parameters = new HashMap<>()
+        parameters.put("createdBy", "javacodegeek.com")
+        final JasperPrint print = JasperFillManager.fillReport(report, parameters, source)
+        JasperExportManager.exportReportToPdfStream(print,response.getOutputStream())
+        response.setContentType("application/pdf");
+        response.addHeader("Content-Disposition", "inline; filename=jasper.pdf;");
 
+
+        //final String filePath = "Harish_Babu"
+        //JasperExportManager.exportReportToPdfFile(print, filePath + ".pdf")
     }
 }
